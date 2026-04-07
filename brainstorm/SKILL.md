@@ -6,11 +6,7 @@ argument-hint: "[feature idea or problem to explore]"
 
 # Brainstorm a Feature or Improvement
 
-**Note: The current year is 2026.** Use this when dating brainstorm documents.
-
 Brainstorming helps answer **WHAT** to build through collaborative dialogue. It precedes `/workflow:plan`, which answers **HOW** to build it.
-
-**Process knowledge:** Load the `brainstorming` skill for detailed question techniques, approach exploration patterns, and YAGNI principles.
 
 ## Feature Description
 
@@ -39,21 +35,18 @@ Use **AskUserQuestion tool** to suggest: "Your requirements seem detailed enough
 
 #### 1.1 Repository Research (Lightweight)
 
-Run a quick repo scan to understand existing patterns:
-
-- Task repo-research-analyst("Understand existing patterns related to: <feature_description>")
-
-Focus on: similar features, established patterns, CLAUDE.md guidance.
+Run a quick repo scan to understand existing patterns. Use the Explore agent to search the codebase for similar features, established patterns, and any project conventions (e.g. CLAUDE.md).
 
 #### 1.2 Collaborative Dialogue
 
 Use the **AskUserQuestion tool** to ask questions **one at a time**.
 
-**Guidelines (see `brainstorming` skill for detailed techniques):**
+**Guidelines:**
 - Prefer multiple choice when natural options exist
 - Start broad (purpose, users) then narrow (constraints, edge cases)
 - Validate assumptions explicitly
 - Ask about success criteria
+- Apply YAGNI — resist over-scoping
 
 **Exit condition:** Continue until the idea is clear OR user says "proceed"
 
@@ -74,7 +67,11 @@ Use **AskUserQuestion tool** to ask which approach the user prefers.
 
 Write a brainstorm document to `docs/brainstorms/YYYY-MM-DD-<topic>-brainstorm.md`.
 
-**Document structure:** See the `brainstorming` skill for the template format. Key sections: What We're Building, Why This Approach, Key Decisions, Open Questions.
+**Document structure — key sections:**
+- What We're Building
+- Why This Approach
+- Key Decisions
+- Open Questions
 
 Ensure `docs/brainstorms/` directory exists before writing.
 
@@ -87,18 +84,18 @@ Use **AskUserQuestion tool** to present next steps:
 **Question:** "Brainstorm captured. What would you like to do next?"
 
 **Options:**
-1. **Review and refine** - Improve the document through structured self-review
+1. **Review and refine** - Re-read the document critically and improve it
 2. **Proceed to planning** - Run `/workflow:plan` (will auto-detect this brainstorm)
 3. **Ask more questions** - I have more questions to clarify before moving on
 4. **Done for now** - Return later
 
-**If user selects "Ask more questions":** YOU (Claude) return to Phase 1.2 (Collaborative Dialogue) and continue asking the USER questions one at a time to further refine the design. The user wants YOU to probe deeper - ask about edge cases, constraints, preferences, or areas not yet explored. Continue until the user is satisfied, then return to Phase 4.
+**If user selects "Ask more questions":** Return to Phase 1.2 (Collaborative Dialogue) and continue asking questions one at a time to further refine the design. Probe deeper — edge cases, constraints, preferences, or areas not yet explored. Continue until satisfied, then return to Phase 4.
 
 **If user selects "Review and refine":**
 
-Load the `document-review` skill and apply it to the brainstorm document.
+Re-read the brainstorm document critically. Look for gaps, contradictions, vague language, or missing edge cases. Propose specific improvements and apply them after user approval.
 
-When document-review returns "Review complete", present next steps:
+When done, present next steps:
 
 1. **Move to planning** - Continue to `/workflow:plan` with this document
 2. **Done for now** - Brainstorming complete. To start planning later: `/workflow:plan [document-path]`

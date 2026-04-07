@@ -72,14 +72,14 @@ Refine the idea through collaborative dialogue using the **AskUserQuestion tool*
 First, I need to understand the project's conventions, existing patterns, and any documented learnings. This is fast and local - it informs whether external research is needed.
 </thinking>
 
-Run these agents **in parallel** to gather local context:
+Run these searches **in parallel** to gather local context:
 
-- Task repo-research-analyst(feature_description)
-- Task learnings-researcher(feature_description)
+- Use the Explore agent to scan the repo for existing patterns, CLAUDE.md guidance, and similar features
+- Search `docs/solutions/` (if it exists) for documented learnings that might apply (gotchas, patterns, lessons learned)
 
 **What to look for:**
-- **Repo research:** existing patterns, CLAUDE.md guidance, technology familiarity, pattern consistency
-- **Learnings:** documented solutions in `docs/solutions/` that might apply (gotchas, patterns, lessons learned)
+- **Repo research:** existing patterns, project conventions, technology familiarity, pattern consistency
+- **Learnings:** documented solutions that might apply (gotchas, patterns, lessons learned)
 
 These findings inform the next step.
 
@@ -103,16 +103,16 @@ Examples:
 
 **Only run if Step 1.5 indicates external research is valuable.**
 
-Run these agents in parallel:
+Run parallel research using the Agent tool:
 
-- Task best-practices-researcher(feature_description)
-- Task framework-docs-researcher(feature_description)
+- Search for best practices and industry patterns related to the feature
+- Look up framework documentation for relevant APIs and conventions
 
 ### 1.6. Consolidate Research
 
 After all research steps complete, consolidate findings:
 
-- Document relevant file paths from repo research (e.g., `app/services/example_service.rb:42`)
+- Document relevant file paths from repo research (e.g., `app/Services/PaymentService.php:42`)
 - **Include relevant institutional learnings** from `docs/solutions/` (key insights, gotchas to avoid)
 - Note external documentation URLs and best practices (if external research was done)
 - List related issues or PRs discovered
@@ -146,17 +146,13 @@ Think like a product manager - what would make this issue clear and actionable? 
 - [ ] Gather supporting materials (error logs, screenshots, design mockups)
 - [ ] Prepare code examples or reproduction steps if applicable, name the mock filenames in the lists
 
-### 3. SpecFlow Analysis
+### 3. Validate the Specification
 
-After planning the issue structure, run SpecFlow Analyzer to validate and refine the feature specification:
+After planning the issue structure, review the spec critically:
 
-- Task compound-engineering:workflow:spec-flow-analyzer(feature_description, research_findings)
-
-**SpecFlow Analyzer Output:**
-
-- [ ] Review SpecFlow analysis results
-- [ ] Incorporate any identified gaps or edge cases into the issue
-- [ ] Update acceptance criteria based on SpecFlow findings
+- [ ] Identify gaps or missing edge cases in the requirements
+- [ ] Check that acceptance criteria are testable and specific
+- [ ] Verify the scope is well-bounded (no scope creep)
 
 ### 4. Choose Implementation Detail Level
 
@@ -197,15 +193,7 @@ date: YYYY-MM-DD
 
 ## MVP
 
-### test.rb
-
-```ruby
-class Test
-  def initialize
-    @name = "test"
-  end
-end
-```
+[Pseudocode or code examples illustrating the approach]
 
 ## References
 
@@ -465,14 +453,12 @@ Apply best practices for clarity and actionability, making the issue easy to sca
 ````markdown
 # Good example with syntax highlighting and line references
 
-
-```ruby
-# app/services/user_service.rb:42
-def process_user(user)
-
-# Implementation here
-
-end
+```php
+// app/Services/UserService.php:42
+public function processUser(User $user): void
+{
+    // Implementation here
+}
 ```
 
 # Collapsible error logs
@@ -517,7 +503,7 @@ Use the Write tool to save the complete plan to `docs/plans/YYYY-MM-DD-<type>-<d
 
 Confirm: "Plan written to docs/plans/[filename]"
 
-**Pipeline mode:** If invoked from an automated workflow (LFG, SLFG, or any `disable-model-invocation` context), skip all AskUserQuestion calls. Make decisions automatically and proceed to writing the plan without interactive prompts.
+**Pipeline mode:** If invoked from an automated workflow, skip all AskUserQuestion calls. Make decisions automatically and proceed to writing the plan without interactive prompts.
 
 ## Output Format
 
@@ -545,25 +531,19 @@ After writing the plan file, use the **AskUserQuestion tool** to present these o
 **Options:**
 1. **Open plan in editor** - Open the plan file for review
 2. **Run `/deepen-plan`** - Enhance each section with parallel research agents (best practices, performance, UI)
-3. **Run `/technical_review`** - Technical feedback from code-focused reviewers (DHH, Kieran, Simplicity)
-4. **Review and refine** - Improve the document through structured self-review
-5. **Start `/workflow:work`** - Begin implementing this plan locally
-6. **Start `/workflow:work` on remote** - Begin implementing in Claude Code on the web (use `&` to run in background)
-7. **Create Issue** - Create issue in project tracker (GitHub/Linear)
+3. **Review and refine** - Re-read critically and improve the document
+4. **Start `/workflow:work`** - Begin implementing this plan
+5. **Create Issue** - Create issue in project tracker (GitHub/Linear)
 
 Based on selection:
 - **Open plan in editor** → Run `open docs/plans/<plan_filename>.md` to open the file in the user's default editor
 - **`/deepen-plan`** → Call the /deepen-plan command with the plan file path to enhance with research
-- **`/technical_review`** → Call the /technical_review command with the plan file path
-- **Review and refine** → Load `document-review` skill.
+- **Review and refine** → Re-read the plan critically, identify gaps, and propose improvements
 - **`/workflow:work`** → Call the /workflow:work command with the plan file path
-- **`/workflow:work` on remote** → Run `/workflow:work docs/plans/<plan_filename>.md &` to start work in background for Claude Code web
 - **Create Issue** → See "Issue Creation" section below
 - **Other** (automatically provided) → Accept free text for rework or specific changes
 
-**Note:** If running `/workflow:plan` with ultrathink enabled, automatically run `/deepen-plan` after plan creation for maximum depth and grounding.
-
-Loop back to options after Simplify or Other changes until user selects `/workflow:work` or `/technical_review`.
+Loop back to options after changes until user selects `/workflow:work` or creates an issue.
 
 ## Issue Creation
 

@@ -32,9 +32,9 @@ Prioritized checklist — address whatever is relevant to the current context. R
 
 ### 3. Seeder Data Integrity
 
-- Reference data seeders should contain accurate D&D 5e data.
+- Reference data seeders should contain accurate domain data matching the application's requirements.
 - Cross-check seeded data against the model's fields — if a column exists, the seeder should populate it.
-- Ensure foreign key relationships are satisfied (e.g. races should reference valid sources).
+- Ensure foreign key relationships are satisfied (e.g. child records should reference valid parent records).
 
 ### 4. Missing Seeders
 

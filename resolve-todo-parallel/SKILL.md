@@ -10,25 +10,25 @@ Resolve all TODO comments using parallel processing.
 
 ### 1. Analyze
 
-Get all unresolved TODOs from the /todos/\*.md directory
+Get all unresolved TODOs from the /todos/\*.md directory.
 
-If any todo recommends deleting, removing, or gitignoring files in `docs/plans/` or `docs/solutions/`, skip it and mark it as `wont_fix`. These are compound-engineering pipeline artifacts that are intentional and permanent.
+If any todo recommends deleting or removing files that are part of your project's workflow artifacts (e.g. plan files, solution docs), skip it and mark it as `wont_fix`.
 
 ### 2. Plan
 
-Create a TodoWrite list of all unresolved items grouped by type.Make sure to look at dependencies that might occur and prioritize the ones needed by others. For example, if you need to change a name, you must wait to do the others. Output a mermaid flow diagram showing how we can do this. Can we do everything in parallel? Do we need to do one first that leads to others in parallel? I'll put the to-dos in the mermaid diagram flow‑wise so the agent knows how to proceed in order.
+Create a task list of all unresolved items grouped by type. Look at dependencies that might occur and prioritize the ones needed by others. For example, if you need to change a name, you must wait to do the others. Output a mermaid flow diagram showing how we can do this. Can we do everything in parallel? Do we need to do one first that leads to others in parallel?
 
 ### 3. Implement (PARALLEL)
 
-Spawn a pr-comment-resolver agent for each unresolved item in parallel.
+Spawn a general-purpose agent for each unresolved item in parallel.
 
-So if there are 3 comments, it will spawn 3 pr-comment-resolver agents in parallel. liek this
+So if there are 3 items, spawn 3 agents in parallel:
 
-1. Task pr-comment-resolver(comment1)
-2. Task pr-comment-resolver(comment2)
-3. Task pr-comment-resolver(comment3)
+1. Agent(resolve item 1)
+2. Agent(resolve item 2)
+3. Agent(resolve item 3)
 
-Always run all in parallel subagents/Tasks for each Todo item.
+Always run all in parallel subagents for each todo item.
 
 ### 4. Commit & Resolve
 

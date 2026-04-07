@@ -19,9 +19,7 @@ Activate this skill when:
 
 ## Reference Documentation
 
-Full internal reference: `docs/references/tiptap-v3-reference.md` — read this for detailed coverage of all APIs, extension methods, and migration notes.
-
-### Official Docs (deep dive when the skill doesn't cover enough)
+### Official Docs
 
 - **Editor API:** https://tiptap.dev/docs/editor/api/editor
 - **Commands:** https://tiptap.dev/docs/editor/api/commands
@@ -35,23 +33,11 @@ Full internal reference: `docs/references/tiptap-v3-reference.md` — read this 
 - **Performance:** https://tiptap.dev/docs/guides/performance
 - **ProseMirror concepts:** https://tiptap.dev/docs/editor/core-concepts/prosemirror
 
-## Installed Packages (v3.20.x)
-
-```
-@tiptap/starter-kit
-@tiptap/vue-3
-@tiptap/extension-link
-@tiptap/extension-placeholder
-@tiptap/extension-table (+ table-cell, table-header, table-row)
-@tiptap/extension-text-align
-@tiptap/html
-```
-
 ## Critical Rules
 
 ### SSR Safety
 
-This app uses Inertia.js SSR. TipTap requires browser APIs.
+If your app uses SSR (e.g., Nuxt, Inertia.js SSR), TipTap requires browser APIs and needs special handling.
 
 ```ts
 // REQUIRED: Prevent server-side rendering attempts

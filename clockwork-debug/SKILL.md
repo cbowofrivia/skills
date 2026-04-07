@@ -12,7 +12,7 @@ Use this skill when:
 - The user asks to debug N+1 queries, slow queries, or performance issues for a route
 - The user mentions Clockwork profiling data
 - The user says "have a look at" or "debug" performance for a specific URL path or controller
-- The user provides a URI (e.g., `/codex/charles-8797`) or controller FQCN (e.g., `App\Http\Controllers\Codex\CodexIndexController`)
+- The user provides a URI (e.g., `/users/42`) or controller FQCN (e.g., `App\Http\Controllers\UserController`)
 
 ## How Clockwork Data is Stored
 
@@ -29,7 +29,7 @@ Use this skill when:
 Example:
 
 ```
-1773766973-3035-1977356974,1773766973.2629,GET,/codex/charles-8797,App\Http\Controllers\Codex\CodexIndexController,200,480.61,request
+1773766973-3035-1977356974,1773766973.2629,GET,/users/42,App\Http\Controllers\UserController,200,480.61,request
 ```
 
 Fields:
@@ -49,8 +49,8 @@ Fields:
 
 Read `storage/clockwork/index` and find matching lines. Match against the user's input:
 
-- If the user gave a **URI path** (e.g., `/codex/charles-8797`), match field 4
-- If the user gave a **controller** (e.g., `CodexIndexController`), match field 5 (substring match is fine)
+- If the user gave a **URI path** (e.g., `/users/42`), match field 4
+- If the user gave a **controller** (e.g., `UserController`), match field 5 (substring match is fine)
 - If the user gave both, match both
 
 From all matches, pick the **most recent** one (highest timestamp in field 2).
@@ -90,7 +90,7 @@ Present findings in this order:
 3. **Slow queries** — Any individual query taking >10ms
 4. **Models retrieved** — Which models are being loaded and how many
 5. **Recommendations** — Concrete fixes:
-   - Which relationships to eager-load and where (e.g., "Add `->with('world')` to the query in `CodexIndexController@show`")
+   - Which relationships to eager-load and where (e.g., "Add `->with('posts')` to the query in `UserController@show`")
    - Whether to use `select()` to limit columns
    - Whether queries can be eliminated entirely
 
